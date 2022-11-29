@@ -137,9 +137,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="ThreeD.cpp" />
+    <ClCompile Include="TwoD.cpp" />
+    <ClCompile Include="Vec.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Rect.h" />
+    <ClInclude Include="Shape.h" />
+    <ClInclude Include="ThreeD.h" />
+    <ClInclude Include="TwoD.h" />
+    <ClInclude Include="Vec.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

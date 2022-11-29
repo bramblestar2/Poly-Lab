@@ -41,8 +41,7 @@ void Window::updateSFMLEvents()
 {
 	while (window->pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed ||
-			event.key.code == sf::Keyboard::Escape)
+		if (event.type == sf::Event::Closed)
 			window->close();
 		if (event.type == sf::Event::KeyPressed)
 		{
@@ -55,4 +54,5 @@ void Window::updateSFMLEvents()
 void Window::initWindow()
 {
 	window = new sf::RenderWindow(sf::VideoMode(100, 100), "TITLE", sf::Style::Default);
+	window->setFramerateLimit(60);
 }
