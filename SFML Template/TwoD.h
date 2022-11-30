@@ -20,13 +20,10 @@ public:
 	int getVertexCount() const;
 	FloatRect getLocalBounds() const;
 	FloatRect& getGlobalBounds();
-
-	//TwoD& operator=(const TwoD& right);
-	//void render() override;
 private:
 	int vertexCount;
-	//std::unique_ptr<Vertex[]> verticies;
-	Vertex* verticies;
+	std::shared_ptr<Vertex[]> verticies;
+	//Vertex* verticies;
 
 	FloatRect globalBounds;
 };
