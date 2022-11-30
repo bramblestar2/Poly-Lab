@@ -12,6 +12,7 @@ public:
 	~TwoD();
 
 	void setVertex(const int _It, const Vertex _Vertex);
+	void setColor(const Color3f _Color);
 
 	Vertex& getVertex(const int _It) const;
 	int getVertexCount() const;

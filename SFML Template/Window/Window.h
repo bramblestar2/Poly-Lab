@@ -4,6 +4,7 @@
 #include <SFML/OpenGL.hpp>
 #include <iostream>
 #include "../View2d.h"
+#include "../Circle.h"
 
 class Window
 {
@@ -27,5 +28,7 @@ private:
 	sf::Event event;
 
 	View2d v1;
+
+	Circle c;
 };
 

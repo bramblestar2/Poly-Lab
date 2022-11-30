@@ -21,6 +21,11 @@ void TwoD::setVertex(const int _It, const Vertex _Vertex)
     verticies[_It] = _Vertex;
 }
 
+void TwoD::setColor(const Color3f _Color)
+{
+    for (int i = 0; i < 4; i++)
+        getVertex(i).color = _Color;
+}
 
 Vertex& TwoD::getVertex(const int _It) const
 {

@@ -1,5 +1,4 @@
 #include "Window.h"
-#include "../Rectangle.h"
 
 Window::Window()
 {
@@ -12,6 +11,8 @@ Window::Window()
 	v1.setPosition(Vec2f(0,0));
 
 	v1.setView();
+
+	c = Circle(50);
 }
 
 
@@ -36,6 +37,9 @@ void Window::run()
 void Window::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	
+	//c.render();
 
 	window->display();
 }

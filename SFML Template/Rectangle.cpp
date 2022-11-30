@@ -16,7 +16,7 @@ RectangleGL::~RectangleGL()
 void RectangleGL::render()
 {
 	glBegin(GL_QUADS);
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < TwoD::getVertexCount(); i++)
 	{
 		Vertex v = TwoD::getVertex(i);
 		Color3f perc = v.color.toPercentage();
@@ -24,10 +24,4 @@ void RectangleGL::render()
 		glVertex2f(v.position.x, v.position.y);
 	}
 	glEnd();
-}
-
-void RectangleGL::setColor(const Color3f _Color)
-{
-	for (int i = 0; i < 4; i++)
-		TwoD::getVertex(i).color = _Color;
 }

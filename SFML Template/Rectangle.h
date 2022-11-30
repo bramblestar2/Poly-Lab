@@ -9,7 +9,6 @@ public:
 	~RectangleGL();
 
 	void render() override;
-	void setColor(const Color3f _Color);
 
 private:
 };
