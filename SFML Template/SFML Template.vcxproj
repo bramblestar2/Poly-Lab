@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\SFML\include;$(ProjectDir)Dependencies\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies\SFML\include;$(ProjectDir)Dependencies\glm</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -148,10 +148,13 @@
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="ThreeD.cpp" />
+    <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="TwoD.cpp" />
     <ClCompile Include="Vec.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="View2d.cpp" />
+    <ClCompile Include="View3d.cpp" />
+    <ClCompile Include="Window3d.cpp" />
     <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,10 +165,13 @@
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="ThreeD.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="TwoD.h" />
     <ClInclude Include="Vec.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="View2d.h" />
+    <ClInclude Include="View3d.h" />
+    <ClInclude Include="Window3d.h" />
     <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
