@@ -37,8 +37,8 @@ void Window::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	RectangleGL a(FloatRect(Vec2f(0, 0), Vec2f(100,100)));
-	//a.render();
+	RectangleGL a;
+	a.render();
 
 	window->display();
 }

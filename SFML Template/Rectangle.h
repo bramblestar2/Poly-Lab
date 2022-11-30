@@ -5,8 +5,7 @@
 class RectangleGL : public TwoD
 {
 public:
-	RectangleGL(const Vec2f _Size);
-	RectangleGL();
+	RectangleGL(const FloatRect _Size = FloatRect());
 	~RectangleGL();
 
 	void render() override;

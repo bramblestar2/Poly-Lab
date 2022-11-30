@@ -4,12 +4,13 @@
 template <typename T>
 struct Rect
 {
-	Rect(const Vec2<T> _Position, const Vec2<T> _Size);
-	Rect();
+	Rect(const Vec2<T> _Position = Vec2<T>(), const Vec2<T> _Size = Vec2<T>());
 
 	bool contains(const Vec2<T> _Point);
 	bool intersects(const Rect<T> _Rect);
 
+	T right();
+	T bottom();
 	Vec2<T> position, size;
 };
 
