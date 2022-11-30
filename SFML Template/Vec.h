@@ -19,6 +19,13 @@ struct Vec2
 	Vec2() { x = 0; y = 0; }
 	Vec2(T _X, T _Y) { x = _X; y = _Y; }
 	T x, y;
+
+	Vec2<T>& operator+=(const Vec2<T> right)
+	{
+		this->x += right.x;
+		this->y += right.y;
+		return *this;
+	}
 };
 
 typedef Vec2<float> Vec2f;

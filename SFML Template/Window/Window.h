@@ -1,5 +1,9 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+//#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/OpenGL.hpp>
+#include <iostream>
+#include "../View2d.h"
 
 class Window
 {
@@ -15,11 +19,13 @@ public:
 	void updateSFMLEvents();
 private:
 	void initWindow();
-	
+
 	sf::Clock dtClock;
 	double dt;
 
-	sf::RenderWindow* window;
+	sf::Window* window;
 	sf::Event event;
+
+	View2d v1;
 };
 

@@ -2,41 +2,37 @@
 #include <iostream>
 #include <stdexcept>
 
-TwoD::TwoD(const int _Point_Count)
+TwoD::TwoD(const int _VertexCount)
 {
-    pointCount = _Point_Count;
-    points = new Vec2f[pointCount];
+    vertexCount = _VertexCount;
+    vertexs = new Vertex[_VertexCount];
 }
+
 
 TwoD::~TwoD()
 {
-    if (points != nullptr)
-        delete[] points;
+    if (vertexs != nullptr)
+        delete[] vertexs;
 }
 
-void TwoD::setPoint(const int _Point, const Vec2f _Position)
-{
 
+void TwoD::setVertex(const int _It, const Vertex _Vertex)
+{
+    vertexs[_It] = _Vertex;
 }
 
-void TwoD::getPoints() const
-{
-}
 
-void TwoD::render()
+Vertex TwoD::getVertex(const int _It) const
 {
-}
-
-Vec2f& TwoD::operator[](const int right)
-{
-    if (right > pointCount)
-        throw std::range_error("Error: index bigger than the number of points");
+    if (_It > vertexCount)
+        throw std::range_error("Error: index bigger than the number of vertexs");
     else
-    {
-        return points[right];
-    }
+        return vertexs[_It];
 
-   
-    Vec2f temp;
-    return temp;
+    return Vertex();
+}
+
+int TwoD::getVertexCount() const
+{
+    return vertexCount;
 }
