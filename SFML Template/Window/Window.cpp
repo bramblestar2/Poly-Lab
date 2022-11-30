@@ -36,9 +36,6 @@ void Window::run()
 void Window::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	RectangleGL a;
-	a.render();
 
 	window->display();
 }

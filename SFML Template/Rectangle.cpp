@@ -1,11 +1,12 @@
 #include "Rectangle.h"
+#include <iostream>
 
 RectangleGL::RectangleGL(const FloatRect _Rect) : TwoD(4)
 {
-	TwoD::getVertex(0).position = Vec2f(0, 0); //Top left
-	TwoD::getVertex(1).position = Vec2f(100, 0); //Top right
-	TwoD::getVertex(2).position = Vec2f(100, 100); //Bottom right
-	TwoD::getVertex(3).position = Vec2f(0, 100); //Bottom left
+	TwoD::getVertex(0).position = Vec2f(_Rect.left(), _Rect.top()); //Top left
+	TwoD::getVertex(1).position = Vec2f(_Rect.right(), _Rect.top()); //Top right
+	TwoD::getVertex(2).position = Vec2f(_Rect.right(), _Rect.bottom()); //Bottom right
+	TwoD::getVertex(3).position = Vec2f(_Rect.left(), _Rect.bottom()); //Bottom left
 }
 
 RectangleGL::~RectangleGL()
@@ -17,10 +18,16 @@ void RectangleGL::render()
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 4; i++)
 	{
-		Vertex v = TwoD::getVertex(1);
+		Vertex v = TwoD::getVertex(i);
 		Color3f perc = v.color.toPercentage();
 		glColor3f(perc.r, perc.g, perc.b);
 		glVertex2f(v.position.x, v.position.y);
 	}
 	glEnd();
+}
+
+void RectangleGL::setColor(const Color3f _Color)
+{
+	for (int i = 0; i < 4; i++)
+		TwoD::getVertex(i).color = _Color;
 }
