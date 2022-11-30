@@ -10,6 +10,8 @@ public:
 
 	void render() override;
 
+	virtual void setSize(const Vec2f _Size);
+	
 private:
 };
 

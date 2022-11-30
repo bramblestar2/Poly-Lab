@@ -8,7 +8,6 @@ Window::Window()
 	v1.setPosition(Vec2f(0,0));
 
 	v1.setView();
-
 }
 
 
@@ -96,7 +95,7 @@ void Window::randTriangles()
 	{
 		for (int i = 0; i < 20; i++)
 		{
-			triangles[i] = Triangle(Vec2f(rand() % 100 + 5, rand() % 100 + 5));
+			triangles[i] = Triangle(Vec2f(rand() % 20 + 5, rand() % 20 + 5));
 			triangles[i].setPosition(Vec2f(rand() % window->getSize().x, 
 										   rand() % window->getSize().y));
 			triangles[i].setColor(Color3f(rand() % 255, rand() % 255, rand() % 255));
@@ -112,7 +111,7 @@ void Window::randCircles()
 	{
 		for (int i = 0; i < 20; i++)
 		{
-			circles[i] = Circle(rand()%90 + 10, rand() % 30 + 6);
+			circles[i] = Circle(rand()%10 + 10, rand() % 30 + 6);
 			circles[i].setPosition(Vec2f(rand() % window->getSize().x, 
 										 rand() % window->getSize().y));
 			circles[i].setColor(Color3f(rand()%255, rand() % 255, rand() % 255));
@@ -128,7 +127,7 @@ void Window::randRectangles()
 	{
 		for (int i = 0; i < 20; i++)
 		{
-			rectangles[i] = RectangleGL(FloatRect(Vec2f(), Vec2f(rand() % 100 + 5, rand() % 100 + 5)));
+			rectangles[i].setSize(Vec2f(rand() % 30 + 5, rand() % 30 + 5));
 			rectangles[i].setPosition(Vec2f(rand() % window->getSize().x, 
 											rand() % window->getSize().y));
 			rectangles[i].setColor(Color3f(rand() % 255, rand() % 255, rand() % 255));
@@ -144,7 +143,7 @@ void Window::randSquares()
 	{
 		for (int i = 0; i < 20; i++)
 		{
-			squares[i] = Square(rand()%90+10);
+			squares[i] = Square(rand()%30+10);
 			squares[i].setPosition(Vec2f(rand() % window->getSize().x, 
 										 rand() % window->getSize().y));
 			squares[i].setColor(Color3f(rand() % 255, rand() % 255, rand() % 255));

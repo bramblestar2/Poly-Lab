@@ -13,8 +13,8 @@ public:
 	void move(const Vec3f);
 	void rotate(const Vec3f);
 	void setPosition(const Vec3f);
-	void setRotationAxis(const Vec3f);
-	void setRotationSpeed(const float);
+	//void setRotationAxis(const Vec3f);
+	//void setRotationSpeed(const float);
 
 	Vec2f getSize() const;
 	Vec2f getPosition() const;
@@ -22,8 +22,12 @@ public:
 	void setView();
 
 private:
-	float rotationSpeed;
-	glm::vec3 rotationAxis;
+	//float rotationSpeed;
+	//glm::vec3 rotationAxis;
 	FloatRect bounds;
+
+	glm::vec3 cameraPos;
+	glm::vec3 cameraTarget;
+	glm::vec3 cameraDirection;
 };
 
