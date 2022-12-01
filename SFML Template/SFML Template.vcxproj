@@ -146,10 +146,12 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="Rectangle3d.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="ThreeD.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="Triangle3d.cpp" />
     <ClCompile Include="TwoD.cpp" />
     <ClCompile Include="Vec.cpp" />
     <ClCompile Include="Vertex.cpp" />
@@ -164,10 +166,12 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="Rectangle3d.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="ThreeD.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="Triangle3d.h" />
     <ClInclude Include="TwoD.h" />
     <ClInclude Include="Vec.h" />
     <ClInclude Include="Vertex.h" />

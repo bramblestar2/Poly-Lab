@@ -23,7 +23,6 @@ public:
 private:
 	int vertexCount;
 	std::shared_ptr<Vertex[]> verticies;
-	//Vertex* verticies;
 
 	FloatRect globalBounds;
 };

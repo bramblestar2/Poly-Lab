@@ -84,6 +84,12 @@
     <ClCompile Include="Cube.cpp">
       <Filter>Source Files\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Triangle3d.cpp">
+      <Filter>Source Files\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle3d.cpp">
+      <Filter>Source Files\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h">
@@ -132,6 +138,12 @@
       <Filter>Header Files\Essentials</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
+      <Filter>Header Files\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle3d.h">
+      <Filter>Header Files\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle3d.h">
       <Filter>Header Files\3D</Filter>
     </ClInclude>
   </ItemGroup>

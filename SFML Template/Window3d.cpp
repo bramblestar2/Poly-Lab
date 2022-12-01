@@ -11,7 +11,7 @@ Window3d::Window3d()
 	glViewport(0.0f, 0.0f, window->getSize().x , window->getSize().y);
 	glMatrixMode(GL_PROJECTION); 
 	glLoadIdentity(); 
-	glOrtho(0, window->getSize().x, 0, window->getSize().y, -1000, 1000);
+	glOrtho(-300, window->getSize().x, -300, window->getSize().y, -1000, 1000);
 	glMatrixMode(GL_MODELVIEW); 
 	glLoadIdentity();
 
@@ -46,7 +46,7 @@ void Window3d::render()
 	float camZ = cos((timeClock.getElapsedTime().asSeconds())) * radius;
 	glm::mat4 view;
 	
-	view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	view = glm::lookAt(glm::vec3(camX, sin((timeClock.getElapsedTime().asSeconds())) * radius, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 
 	GLfloat matrix[16];
 
@@ -60,10 +60,19 @@ void Window3d::render()
 	// White side - BACK
 	glBegin(GL_POLYGON);
 	glColor3f(1.0, 1.0, 1.0);
-	glVertex3f(300, 100,300);
-	glVertex3f(300,300,300);
-	glVertex3f(100,300,300);
-	glVertex3f(100, 100,300);
+	glVertex3f(300, 100, 300);
+	glVertex3f(300, 300, 300);
+	glVertex3f(100, 300, 300);
+	glVertex3f(100, 100, 300);
+	glEnd();
+
+	// Orange side - Front
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 0.7, 0.0);
+	glVertex3f(300, 100, 100);
+	glVertex3f(300, 300, 100);
+	glVertex3f(100, 300, 100);
+	glVertex3f(100, 100, 100);
 	glEnd();
 
 	// Purple side - RIGHT
