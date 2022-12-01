@@ -1,6 +1,11 @@
 #pragma once
 #include <SFML/OpenGL.hpp>
 #include <SFML/Window.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+
 class Window3d
 {
 public:
@@ -21,6 +26,5 @@ private:
 
 	sf::Window* window;
 	sf::Event event;
-
 };
 
