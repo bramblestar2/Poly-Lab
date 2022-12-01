@@ -5,7 +5,7 @@
 int main()
 {
     Window3d window3d;
-
+    
     window3d.run();
 
 

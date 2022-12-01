@@ -81,6 +81,9 @@
     <ClCompile Include="Shape.cpp">
       <Filter>Source Files\Essentials</Filter>
     </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Source Files\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h">
@@ -127,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Shape.h">
       <Filter>Header Files\Essentials</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Header Files\3D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
