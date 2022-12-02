@@ -146,5 +146,16 @@
     <ClInclude Include="Rectangle3d.h">
       <Filter>Header Files\3D</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\camera.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shader\camera.vs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
