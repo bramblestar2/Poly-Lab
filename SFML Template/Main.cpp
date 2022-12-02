@@ -4,14 +4,14 @@
 
 int main()
 {
-    //Window3d window3d;
+    Window3d window3d;
     
-    //window3d.run();
+    window3d.run();
 
 
-    Window window;
+    //Window window;
     //
-    window.run();
+    //window.run();
 
     return 0;
 }

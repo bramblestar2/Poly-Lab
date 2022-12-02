@@ -26,5 +26,11 @@ private:
 
 	sf::Window* window;
 	sf::Event event;
+
+	
+	glm::mat4 view;
+	glm::vec3 cameraPos;
+	glm::vec3 cameraFront;
+	glm::vec3 cameraUp;
 };
 

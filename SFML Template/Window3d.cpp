@@ -8,9 +8,15 @@ Window3d::Window3d()
 	glViewport(0.0f, 0.0f, window->getSize().x , window->getSize().y);
 	glMatrixMode(GL_PROJECTION); 
 	glLoadIdentity(); 
-	glOrtho(-300, window->getSize().x, -300, window->getSize().y, -1000, 1000);
+	glOrtho(0, window->getSize().x, 0, window->getSize().y, -1000, 1000);
 	glMatrixMode(GL_MODELVIEW); 
 	glLoadIdentity();
+
+
+	cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
 
 	glEnable(GL_DEPTH_TEST);
 }
@@ -41,78 +47,87 @@ void Window3d::render()
 	const float radius = 10.f;
 	float camX = sin((timeClock.getElapsedTime().asSeconds())) * radius;
 	float camZ = cos((timeClock.getElapsedTime().asSeconds())) * radius;
-	glm::mat4 view;
 
-	view = glm::lookAt(glm::vec3(camX+100, 1, camZ+100),
-			glm::vec3(100.0, 0.0, 100.0), glm::vec3(0.0, 1.0, 0.0));
+
+	view = glm::lookAt(glm::vec3(camX*10, 0, camZ * 10),
+			glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 	
+	//view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
+	//	glm::vec3(0.0f, 0.0f, 0.0f),
+	//	glm::vec3(0.0f, 1.0f, 0.0f));
+	//cameraFront.x = 1;
+	//view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+	//std::cout << cameraPos.x << " - " << cameraPos.y << " - " << cameraPos.z << std::endl;
 	GLfloat matrix[16];
 	
 	const float* pSource = (const float*)glm::value_ptr(view);
 	for (int i = 0; i < 16; ++i)
+	{
 		matrix[i] = pSource[i];
+		std::cout << pSource[i] << " - ";
+	}
+	std::cout << std::endl;
 
 	glLoadMatrixf(matrix);
-	glScalef(0.7, 0.7, 0.7);
 	//glMultMatrixf(matrix);
 
 	float posX, posY, posZ;
-	posX = -100;
-	posY = -100;
-	posZ = 100;
+	posX = 0;
+	posY = 0;
+	posZ = 0;
 
 	// White side - BACK
 	glBegin(GL_POLYGON);
 	glColor3f(1.0, 1.0, 1.0);
-	glVertex3f(300 + posX, 100 + posY, 300 + posZ);
-	glVertex3f(300 + posX, 300 + posY, 300 + posZ);
-	glVertex3f(100 + posX, 300 + posY, 300 + posZ);
-	glVertex3f(100 + posX, 100 + posY, 300 + posZ);
+	glVertex3f(200 + posX, 0 + posY, 200 + posZ);
+	glVertex3f(200 + posX, 200 + posY, 200 + posZ);
+	glVertex3f(0 + posX, 200 + posY, 200 + posZ);
+	glVertex3f(0 + posX, 0 + posY, 200 + posZ);
 	glEnd();
 
 	// Orange side - Front
 	glBegin(GL_POLYGON);
 	glColor3f(1.0, 0.7, 0.0);
-	glVertex3f(300 + posX, 100 + posY, 100 + posZ);
-	glVertex3f(300 + posX, 300 + posY, 100 + posZ);
-	glVertex3f(100 + posX, 300 + posY, 100 + posZ);
-	glVertex3f(100 + posX, 100 + posY, 100 + posZ);
+	glVertex3f(200 + posX, 0 + posY, 0 + posZ);
+	glVertex3f(200 + posX, 200 + posY, 0 + posZ);
+	glVertex3f(0 + posX, 200 + posY, 0 + posZ);
+	glVertex3f(0 + posX, 0 + posY, 0 + posZ);
 	glEnd();
 
 	// Purple side - RIGHT
 	glBegin(GL_POLYGON);
 	glColor3f(1.0, 0.0, 1.0);
-	glVertex3f(300 + posX, 100 + posY, 100 + posZ);
-	glVertex3f(300 + posX, 300 + posY, 100 + posZ);
-	glVertex3f(300 + posX, 300 + posY, 300 + posZ);
-	glVertex3f(300 + posX, 100 + posY, 300 + posZ);
+	glVertex3f(200 + posX, 0 + posY, 0 + posZ);
+	glVertex3f(200 + posX, 200 + posY, 0 + posZ);
+	glVertex3f(200 + posX, 200 + posY, 200 + posZ);
+	glVertex3f(200 + posX, 0 + posY, 200 + posZ);
 	glEnd();
 
 	// Green side - LEFT
 	glBegin(GL_POLYGON);
 	glColor3f(0.0, 1.0, 0.0);
-	glVertex3f(100 + posX, 100 + posY, 300 + posZ);
-	glVertex3f(100 + posX, 300 + posY, 300 + posZ);
-	glVertex3f(100 + posX, 300 + posY, 100 + posZ);
-	glVertex3f(100 + posX, 100 + posY, 100 + posZ);
+	glVertex3f(0 + posX, 0 + posY, 200 + posZ);
+	glVertex3f(0 + posX, 200 + posY, 200 + posZ);
+	glVertex3f(0 + posX, 200 + posY, 0 + posZ);
+	glVertex3f(0 + posX, 0 + posY, 0 + posZ);
 	glEnd();
 
 	// Blue side - TOP
 	glBegin(GL_POLYGON);
 	glColor3f(0.0, 0.0, 1.0);
-	glVertex3f(300 + posX, 300 + posY, 300 + posZ);
-	glVertex3f(300 + posX, 300 + posY, 100 + posZ);
-	glVertex3f(100 + posX, 300 + posY, 100 + posZ);
-	glVertex3f(100 + posX, 300 + posY, 300 + posZ);
+	glVertex3f(200 + posX, 200 + posY, 200 + posZ);
+	glVertex3f(200 + posX, 200 + posY, 0 + posZ);
+	glVertex3f(0 + posX, 200 + posY, 0 + posZ);
+	glVertex3f(0 + posX, 200 + posY, 200 + posZ);
 	glEnd();
 
 	// Red side - BOTTOM
 	glBegin(GL_POLYGON);
 	glColor3f(1.0, 0.0, 0.0);
-	glVertex3f(300 + posX, 100 + posY, 100 + posZ);
-	glVertex3f(300 + posX, 100 + posY, 300 + posZ);
-	glVertex3f(100 + posX, 100 + posY, 300 + posZ);
-	glVertex3f(100 + posX, 100 + posY, 100 + posZ);
+	glVertex3f(200 + posX, 0 + posY, 0 + posZ);
+	glVertex3f(200 + posX, 0 + posY, 200 + posZ);
+	glVertex3f(0 + posX, 0 + posY, 200 + posZ);
+	glVertex3f(0 + posX, 0 + posY, 0 + posZ);
 	glEnd();
 
 	window->display();
@@ -136,14 +151,15 @@ void Window3d::update()
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		glRotatef(-1, 0, 0, 1);
 
+	const float cameraSpeed = 2.5f * (dt*100);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		glTranslatef(0, -1, 0);
+		cameraPos += cameraSpeed * cameraFront;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		glTranslatef(0, 1, 0);
+		cameraPos -= cameraSpeed * cameraFront;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		glTranslatef(1, 0, 0);
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		glTranslatef(-1, 0, 0);
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
 
 
