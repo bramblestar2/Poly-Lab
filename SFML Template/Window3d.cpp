@@ -9,9 +9,11 @@ Window3d::Window3d()
 	glMatrixMode(GL_PROJECTION); 
 	glLoadIdentity(); 
 	glOrtho(0, window->getSize().x, 0, window->getSize().y, -1000, 1000);
+	glFrustum(0, window->getSize().x, 0, window->getSize().y, -1000, 1000);
 	glMatrixMode(GL_MODELVIEW); 
 	glLoadIdentity();
-
+	
+	
 	cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -51,12 +53,18 @@ void Window3d::render()
 	float x = cos(timeClock.getElapsedTime().asSeconds());
 	float y = sin(timeClock.getElapsedTime().asSeconds());
 	float z = -1;
+
+	glm::mat4 projection = glm::perspective(45.f, (float)(window->getSize().x / window->getSize().y), -1000.f, 1000.f);
+
 	glm::mat4 view;
 	//view = glm::lookAt(glm::vec3(centerX,centerY,centerZ), glm::vec3(0,0,0), glm::vec3(0,1,0));
 	view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
+	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 mvp = projection * view * model;
 	
 	glLoadIdentity();
+	//glMultMatrixf(glm::value_ptr(mvp));
 	glMultMatrixf(glm::value_ptr(view));
 
 	//Front
@@ -91,6 +99,41 @@ void Window3d::render()
 	glVertex3f(100, 100, 0);
 	glVertex3f(100, 100, 100);
 	glVertex3f(0, 100, 100);
+	glEnd();
+
+
+	//Front
+	glBegin(GL_POLYGON);
+	glColor3f(1, .5, 0);
+	glVertex3f(100, 0, 0);
+	glVertex3f(200, 0, 0);
+	glVertex3f(200, 200, 0);
+	glVertex3f(100, 200, 0);
+	glEnd();
+	//Left
+	glBegin(GL_POLYGON);
+	glColor3f(0, .5, 1);
+	glVertex3f(100, 0, 0);
+	glVertex3f(100, 200, 0);
+	glVertex3f(100, 200, 200);
+	glVertex3f(100, 0, 200);
+	glEnd();
+	//Bottom
+	glBegin(GL_POLYGON);
+	glColor3f(1, 0, .5);
+	glVertex3f(100, 0, 0);
+	glVertex3f(200, 0, 0);
+	glVertex3f(200, 0, 200);
+	glVertex3f(100, 0, 200);
+	glEnd();
+
+	//Top
+	glBegin(GL_POLYGON);
+	glColor3f(1, 0, .5);
+	glVertex3f(100, 200, 0);
+	glVertex3f(200, 200, 0);
+	glVertex3f(200, 200, 200);
+	glVertex3f(100, 200, 200);
 	glEnd();
 
 	window->display();
