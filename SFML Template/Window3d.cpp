@@ -4,7 +4,7 @@
 Window3d::Window3d()
 {
 	initWindow();
-
+	sf::Mouse::setPosition(sf::Vector2i(window->getSize().x/2, window->getSize().y/2), *window);
 
 	glClearDepth(1.f);
 	glClearColor(0, 0, 0, 1);
@@ -20,7 +20,7 @@ Window3d::Window3d()
 	glLoadIdentity();
 	float ratio = (float)window->getSize().x / (float)window->getSize().y;
 	glFrustum(-ratio, ratio, -1.f, 1.f, 1.f, 500.f);
-
+	
 	xPos = 0;
 	yPos = 0;
 	zPos = 0;
@@ -36,6 +36,11 @@ Window3d::Window3d()
 
 	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	
+
+	//glEnable(GL_LIGHT0);
+	//glEnable(GL_COLOR_MATERIAL);
+	//glShadeModel(GL_SMOOTH);
 }
 
 
@@ -71,18 +76,13 @@ void Window3d::render()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glMultMatrixf(glm::value_ptr(view));
-	//glTranslatef(0 + xPos, 0 + yPos, -200.f + zPos);
-	//glRotatef(timeClock.getElapsedTime().asSeconds() * 90, 0, 0.5, 1);
-	//glRotatef(xRot, 1, 0, 0);
-	//glRotatef(yRot, 0, 1, 0);
-	//glRotatef(zRot, 0, 0, 1);
 
 
-	float width = 10;
-	float height = 10;
-	float length = 10;
+	float width = 100;
+	float height = 100;
+	float length = 100;
 
-	float x = 100;
+	float x = 0;
 	float y = 0;
 	float z = 0;
 
@@ -149,6 +149,8 @@ void Window3d::render()
 	glVertex3f(rX, y, rZ);
 	glVertex3f(rX, rY, rZ);
 	glEnd();
+
+	
 
 	window->display();
 }
