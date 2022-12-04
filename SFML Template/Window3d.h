@@ -6,6 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Rectangle3d.h"
+
 class Window3d
 {
 public:
@@ -42,5 +44,7 @@ private:
 
 	float lastX, lastY, yaw, pitch;
 	bool firstMouse;
+
+	Rectangle3d rect[25];
 };
 

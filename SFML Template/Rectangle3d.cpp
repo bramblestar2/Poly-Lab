@@ -1,7 +1,10 @@
 #include "Rectangle3d.h"
+#include <iostream>
 
-Rectangle3d::Rectangle3d(const Vec3f _Dimensions, const Vec3f _Position) : ThreeD(0)
+Rectangle3d::Rectangle3d(const Vec3f _Dimensions, const Vec3f _Position)
 {
+	vertices = nullptr;
+
 	setSize(_Dimensions);
 	setPosition(_Position);
 }
@@ -10,66 +13,197 @@ Rectangle3d::~Rectangle3d()
 {
 }
 
-void Rectangle3d::render()
+Vec3f Rectangle3d::getSize() const
 {
-	triangles[0].render();
-	triangles[1].render();
+	return dimensions;
 }
 
-void Rectangle3d::setSize(const Vec3f _Dimensions)
+Vec3f Rectangle3d::getPosition() const
 {
-	//Dimensions
-	//x: Width
-	//y: Height
-	//z: Length
-	
-	/*
-	//REFERENCE
-	//4 Points (Quad) instead of 6 points (3 per triangle)
-	// < 2D Square >
-	//float width = 200, height = 100;
-	//float posX = 0, posY = 0;
-	//glVertex3f(posX,		   posY,		  0); << Top Left Point
-	//glVertex3f(posX + width, posY,		  0); << Top Right Point
-	//glVertex3f(posX + width, posY + height, 0); << Bottom Right Point
-	//glVertex3f(posX		 , posY + height, 0); << Bottom Left Point
-	//
-	// < 3D Cube >
-	//float width = 200, height = 100, length = 200;
-	//float posX = 0, posY = 0, posZ = 0;
-	// < Front >
-	//glVertex3f(posX,		   posY,		  posZ			); << Top Left Point
-	//glVertex3f(posX + width, posY,		  posZ			); << Top Right Point
-	//glVertex3f(posX + width, posY + height, posZ			); << Bottom Right Point
-	//glVertex3f(posX,		   posY + height, posZ			); << Bottom Left Point
-	// < Right >
-	//glVertex3f(posX + width, posY,		  posZ			); << Top Left Point
-	//glVertex3f(posX + width, posY,		  posZ + length	); << Top Right Point
-	//glVertex3f(posX + width, posY + height, posZ + length	); << Bottom Right Point
-	//glVertex3f(posX + width, posY + height, posZ			); << Bottom Left Point
-	*/
+	return position;
+}
 
-	ThreeD::setDimensions(_Dimensions);
+void Rectangle3d::setColor(const float _R, const float _G, const float _B, const float _A)
+{
+	setColor(Color4f(_R, _G, _B, _A));
+}
 
-	//First triangle
-	triangles[0].getVertex(0).position = Vec3f(); // 
-	triangles[0].getVertex(1).position = Vec3f(); // 
-	triangles[0].getVertex(2).position = Vec3f(); // 
+void Rectangle3d::setColor(const Color4f _Color)
+{
+	color = _Color;
 
-	//Second triangle
+	updateVertices();
+}
+
+void Rectangle3d::setPosition(const float _X, const float _Y, const float _Z)
+{
+	setPosition(Vec3f(_X, _Y, _Z));
 }
 
 void Rectangle3d::setPosition(const Vec3f _Position)
 {
-	ThreeD::setPosition(_Position);
+	position = _Position;
+
+	updateVertices();
 }
 
-int Rectangle3d::getTriangleCount() const
+void Rectangle3d::setSize(const float _X, const float _Y, const float _Z)
 {
-	return triangleCount;
+	setSize(Vec3f(_X, _Y, _Z));
 }
 
-Triangle3d& Rectangle3d::getTriangle(const int _It) const
+void Rectangle3d::setSize(const Vec3f _Dimensions)
 {
-	return triangles[_It];
+	dimensions = _Dimensions;
+
+	updateVertices();
+}
+
+void Rectangle3d::render()
+{
+	Vec3f total;
+	total.x = position.x + dimensions.x;
+	total.y = position.y + dimensions.y;
+	total.z = position.z + dimensions.z;
+
+	Color4f rectColor = color.toPercentage();
+
+	glBegin(GL_TRIANGLES);
+	glColor4f(rectColor.r, rectColor.g, rectColor.b, rectColor.a);
+	//Face 1
+	glVertex3f(position.x, position.y, position.z);
+	glVertex3f(position.x, total.y, position.z);
+	glVertex3f(position.x, position.y, total.z);
+	glVertex3f(position.x, position.y, total.z);
+	glVertex3f(position.x, total.y, position.z);
+	glVertex3f(position.x, total.y, total.z);
+
+	glColor4f(rectColor.r - 0.1f, rectColor.g - 0.1f, rectColor.b - 0.1f, rectColor.a);
+	//Face 2
+	glVertex3f(total.x, position.y, position.z); 
+	glVertex3f(total.x, total.y, position.z);	 
+	glVertex3f(total.x, position.y, total.z);	 
+	glVertex3f(total.x, position.y, total.z); 
+	glVertex3f(total.x, total.y, position.z); 
+	glVertex3f(total.x, total.y, total.z);
+	
+	glColor4f(rectColor.r - 0.2f, rectColor.g - 0.2f, rectColor.b - 0.2f, rectColor.a);
+	//Face 3
+	glVertex3f(position.x, position.y, position.z);
+	glVertex3f(total.x, position.y, position.z);
+	glVertex3f(position.x, position.y, total.z);
+	glVertex3f(position.x, position.y, total.z); 
+	glVertex3f(total.x, position.y, position.z);
+	glVertex3f(total.x, position.y, total.z);
+	
+	glColor4f(rectColor.r - 0.3f, rectColor.g - 0.3f, rectColor.b - 0.3f, rectColor.a);
+	//Face 4
+	glVertex3f(position.x, total.y, position.z); 
+	glVertex3f(total.x, total.y, position.z);	 
+	glVertex3f(position.x, total.y, total.z);	 
+	glVertex3f(position.x, total.y, total.z);	 
+	glVertex3f(total.x, total.y, position.z);	 
+	glVertex3f(total.x, total.y, total.z);
+	
+	glColor4f(rectColor.r - 0.4f, rectColor.g - 0.4f, rectColor.b - 0.4f, rectColor.a);
+	//Face 5
+	glVertex3f(position.x, position.y, position.z);
+	glVertex3f(total.x, position.y, position.z); 
+	glVertex3f(position.x, total.y, position.z); 
+	glVertex3f(position.x, total.y, position.z); 
+	glVertex3f(total.x, position.y, position.z); 
+	glVertex3f(total.x, total.y, position.z);
+	
+	glColor4f(rectColor.r - 0.5f, rectColor.g - 0.5f, rectColor.b - 0.5f, rectColor.a);
+	//Face 6
+	glVertex3f(position.x, position.y, total.z);
+	glVertex3f(total.x, position.y, total.z);	 
+	glVertex3f(position.x, total.y, total.z);	 
+	glVertex3f(position.x, total.y, total.z);	 
+	glVertex3f(total.x, position.y, total.z);	 
+	glVertex3f(total.x, total.y, total.z);
+
+	glEnd();
+
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+
+//This is completely useless now since i gave up trying to use
+//an array to draw stuff
+void Rectangle3d::updateVertices()
+{
+	/*
+	
+	Vec3f total;
+	total.x = position.x + dimensions.x;
+	total.y = position.y + dimensions.y;
+	total.z = position.z + dimensions.z;
+
+	Color4f rectColor = color.toPercentage();
+
+	//Each face has 3 triangles
+	//6 rows, 7 columns, 6 faces
+	vertices.reset(new GLfloat[6 * 7 * 6]
+	{
+		//Positions							Colors
+		//Face 1
+		position.x, position.y, position.z, rectColor.r, rectColor.g, rectColor.b, rectColor.a,
+		position.x, total.y, position.z,	rectColor.r, rectColor.g, rectColor.b, rectColor.a,
+		position.x, position.y, total.z,	rectColor.r, rectColor.g, rectColor.b, rectColor.a,
+		position.x, position.y, total.z,	rectColor.r, rectColor.g, rectColor.b, rectColor.a,
+		position.x, total.y, position.z,	rectColor.r, rectColor.g, rectColor.b, rectColor.a,
+		position.x, total.y, total.z,		rectColor.r, rectColor.g, rectColor.b, rectColor.a,
+
+		//Face 2
+		total.x, position.y, position.z, rectColor.r - 0.1f, rectColor.g - 0.1f, rectColor.b - 0.1f, rectColor.a,
+		total.x, total.y, position.z,	 rectColor.r - 0.1f, rectColor.g - 0.1f, rectColor.b - 0.1f, rectColor.a,
+		total.x, position.y, total.z,	 rectColor.r - 0.1f, rectColor.g - 0.1f, rectColor.b - 0.1f, rectColor.a,
+		total.x, position.y, total.z,	 rectColor.r - 0.1f, rectColor.g - 0.1f, rectColor.b - 0.1f, rectColor.a,
+		total.x, total.y, position.z,	 rectColor.r - 0.1f, rectColor.g - 0.1f, rectColor.b - 0.1f, rectColor.a,
+		total.x, total.y, total.z,		 rectColor.r - 0.1f, rectColor.g - 0.1f, rectColor.b - 0.1f, rectColor.a,
+
+		//Face 3
+		position.x, position.y, position.z, rectColor.r - 0.2f, rectColor.g - 0.2f, rectColor.b - 0.2f, rectColor.a,
+		total.x, position.y, position.z,    rectColor.r - 0.2f, rectColor.g - 0.2f, rectColor.b - 0.2f, rectColor.a,
+		position.x, position.y, total.z,    rectColor.r - 0.2f, rectColor.g - 0.2f, rectColor.b - 0.2f, rectColor.a,
+		position.x, position.y, total.z,    rectColor.r - 0.2f, rectColor.g - 0.2f, rectColor.b - 0.2f, rectColor.a,
+		total.x, position.y, position.z,    rectColor.r - 0.2f, rectColor.g - 0.2f, rectColor.b - 0.2f, rectColor.a,
+		total.x, position.y, total.z,	    rectColor.r - 0.2f, rectColor.g - 0.2f, rectColor.b - 0.2f, rectColor.a,
+
+		//Face 4
+		position.x, total.y, position.z, rectColor.r - 0.3f, rectColor.g - 0.3f, rectColor.b - 0.3f, rectColor.a,
+		total.x, total.y, position.z,	 rectColor.r - 0.3f, rectColor.g - 0.3f, rectColor.b - 0.3f, rectColor.a,
+		position.x, total.y, total.z,	 rectColor.r - 0.3f, rectColor.g - 0.3f, rectColor.b - 0.3f, rectColor.a,
+		position.x, total.y, total.z,	 rectColor.r - 0.3f, rectColor.g - 0.3f, rectColor.b - 0.3f, rectColor.a,
+		total.x, total.y, position.z,	 rectColor.r - 0.3f, rectColor.g - 0.3f, rectColor.b - 0.3f, rectColor.a,
+		total.x, total.y, total.z,		 rectColor.r - 0.3f, rectColor.g - 0.3f, rectColor.b - 0.3f, rectColor.a,
+
+		//Face 5
+		position.x, position.y, position.z, rectColor.r - 0.4f, rectColor.g - 0.4f, rectColor.b - 0.4f, rectColor.a,
+		total.x, position.y, position.z,    rectColor.r - 0.4f, rectColor.g - 0.4f, rectColor.b - 0.4f, rectColor.a,
+		position.x, total.y, position.z,    rectColor.r - 0.4f, rectColor.g - 0.4f, rectColor.b - 0.4f, rectColor.a,
+		position.x, total.y, position.z,    rectColor.r - 0.4f, rectColor.g - 0.4f, rectColor.b - 0.4f, rectColor.a,
+		total.x, position.y, position.z,    rectColor.r - 0.4f, rectColor.g - 0.4f, rectColor.b - 0.4f, rectColor.a,
+		total.x, total.y, position.z,	    rectColor.r - 0.4f, rectColor.g - 0.4f, rectColor.b - 0.4f, rectColor.a,
+
+		//Face 6
+		position.x, position.y, total.z, rectColor.r - 0.5f, rectColor.g - 0.5f, rectColor.b - 0.5f, rectColor.a,
+		total.x, position.y, total.z,	 rectColor.r - 0.5f, rectColor.g - 0.5f, rectColor.b - 0.5f, rectColor.a,
+		position.x, total.y, total.z,	 rectColor.r - 0.5f, rectColor.g - 0.5f, rectColor.b - 0.5f, rectColor.a,
+		position.x, total.y, total.z,	 rectColor.r - 0.5f, rectColor.g - 0.5f, rectColor.b - 0.5f, rectColor.a,
+		total.x, position.y, total.z,	 rectColor.r - 0.5f, rectColor.g - 0.5f, rectColor.b - 0.5f, rectColor.a,
+		total.x, total.y, total.z,		 rectColor.r - 0.5f, rectColor.g - 0.5f, rectColor.b - 0.5f, rectColor.a,
+	});
+
+	// Enable position and color vertex components
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 7 * sizeof(GLfloat), vertices.get());
+	glColorPointer(4, GL_FLOAT, 7 * sizeof(GLfloat), vertices.get() + 3);
+
+	// Disable normal and texture coordinates vertex components
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	*/
 }

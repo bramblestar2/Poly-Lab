@@ -1,8 +1,12 @@
 #include "Window3d.h"
 #include <iostream>
+#include <time.h>
+
 
 Window3d::Window3d()
 {
+	srand(time(NULL));
+
 	initWindow();
 	sf::Mouse::setPosition(sf::Vector2i(window->getSize().x/2, window->getSize().y/2), *window);
 
@@ -27,7 +31,7 @@ Window3d::Window3d()
 	yaw = 0;
 	pitch = 0;
 	firstMouse = true;
-
+	
 	view = glm::mat4(1.f);
 
 	cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -36,11 +40,24 @@ Window3d::Window3d()
 
 	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	
 
+	//glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
 	//glEnable(GL_COLOR_MATERIAL);
-	//glShadeModel(GL_SMOOTH);
+	//glShadeModel(GL_FLAT);
+
+	float zPosition = 0;
+	for (int i = 0; i < 25; i++)
+	{
+		rect[i].setSize(10, 10, 10);
+		rect[i].setPosition(10 * (i % 5), 0, 10 * zPosition);
+		rect[i].setColor(Color4f(rand() % 245+10, rand() % 245 + 10, rand() % 245 + 10, 255));
+
+		if (i % 5 == 4)
+		{
+			zPosition++;
+		}
+	}
 }
 
 
@@ -77,80 +94,8 @@ void Window3d::render()
 	glLoadIdentity();
 	glMultMatrixf(glm::value_ptr(view));
 
-
-	float width = 100;
-	float height = 100;
-	float length = 100;
-
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	float rX = width + x;
-	float rY = height + y;
-	float rZ = length + z;
-
-	glBegin(GL_TRIANGLES);
-	glColor4f(0, 0, 1, 1);
-	glVertex3f(x, y, z);
-	glVertex3f(x, rY, z);
-	glVertex3f(x, y, rZ);
-	glVertex3f(x, y, rZ);
-	glVertex3f(x, rY, z);
-	glVertex3f(x, rY, rZ);
-	glEnd();
-
-	glBegin(GL_TRIANGLES);
-	glColor4f(0, 1, 0, 1);
-	glVertex3f(rX, y, z);
-	glVertex3f(rX, rY, z);
-	glVertex3f(rX, y, rZ);
-	glVertex3f(rX, y, rZ);
-	glVertex3f(rX, rY, z);
-	glVertex3f(rX, rY, rZ);
-	glEnd();
-
-	glBegin(GL_TRIANGLES);
-	glColor4f(1, 0, 0, 1);
-	glVertex3f(x, y, z);
-	glVertex3f(rX, y, z);
-	glVertex3f(x, y, rZ);
-	glVertex3f(x, y, rZ);
-	glVertex3f(rX, y, z);
-	glVertex3f(rX, y, rZ);
-	glEnd();
-
-	glBegin(GL_TRIANGLES);
-	glColor4f(0, 1, 1, 1);
-	glVertex3f(x, rY, z);
-	glVertex3f(rX, rY, z);
-	glVertex3f(x, rY, rZ);
-	glVertex3f(x, rY, rZ);
-	glVertex3f(rX, rY, z);
-	glVertex3f(rX, rY, rZ);
-	glEnd();
-
-	glBegin(GL_TRIANGLES);
-	glColor4f(1, 0, 1, 1);
-	glVertex3f(x, y, z);
-	glVertex3f(rX, y, z);
-	glVertex3f(x, rY, z);
-	glVertex3f(x, rY, z);
-	glVertex3f(rX, y, z);
-	glVertex3f(rX, rY, z);
-	glEnd();
-
-	glBegin(GL_TRIANGLES);
-	glColor4f(1, 1, 0, 1);
-	glVertex3f(x, y, rZ);
-	glVertex3f(rX, y, rZ);
-	glVertex3f(x, rY, rZ);
-	glVertex3f(x, rY, rZ);
-	glVertex3f(rX, y, rZ);
-	glVertex3f(rX, rY, rZ);
-	glEnd();
-
-	
+	for (int i = 0; i < 25; i++)
+		rect[i].render();
 
 	window->display();
 }
@@ -159,7 +104,7 @@ void Window3d::render()
 void Window3d::update()
 {
 	const float movementSpeed = 5.f;
-	float cameraSpeed = 1.f * (dt * 100);
+	float cameraSpeed = 0.5f * (dt * 100);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
 		cameraSpeed *= 2;
@@ -274,4 +219,5 @@ void Window3d::initWindow()
 	window->setFramerateLimit(60);
 	window->setActive(true);
 	window->setMouseCursorGrabbed(true);
+	window->setMouseCursorVisible(false);
 }
