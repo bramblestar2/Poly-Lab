@@ -27,18 +27,20 @@ private:
 	sf::Window* window;
 	sf::Event event;
 
-	float centerX, centerY, centerZ;
-	float camX, camY, camZ;
+	float xPos, yPos, zPos;
+	float xRot, yRot, zRot;
 
+	glm::mat4 view;
+
+	//Camera
 	glm::vec3 cameraPos;
+	glm::vec3 cameraTarget;
+	glm::vec3 cameraDirection;
+
 	glm::vec3 cameraFront;
 	glm::vec3 cameraUp;
 
-	float yaw, pitch;
-
-	float lastX, lastY;
+	float lastX, lastY, yaw, pitch;
 	bool firstMouse;
-
-	glm::vec3 direction;
 };
 
