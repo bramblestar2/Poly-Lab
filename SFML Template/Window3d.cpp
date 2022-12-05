@@ -95,7 +95,11 @@ void Window3d::render()
 	glMultMatrixf(glm::value_ptr(view));
 
 	for (int i = 0; i < 25; i++)
+	{
+		Vec3f pos = rect[i].getPosition();
+		rect[i].setPosition(pos.x, sin(timeClock.getElapsedTime().asSeconds() + (pos.x * pos.z)) * 3, pos.z);
 		rect[i].render();
+	}
 
 	window->display();
 }
