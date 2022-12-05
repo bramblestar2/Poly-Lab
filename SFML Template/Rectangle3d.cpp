@@ -132,8 +132,9 @@ void Rectangle3d::render()
 //an array to draw stuff
 void Rectangle3d::updateVertices()
 {
-	/*
 	
+
+	/*
 	Vec3f total;
 	total.x = position.x + dimensions.x;
 	total.y = position.y + dimensions.y;

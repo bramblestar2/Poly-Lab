@@ -45,6 +45,6 @@ private:
 	float lastX, lastY, yaw, pitch;
 	bool firstMouse;
 
-	Rectangle3d rect[25];
+	Rectangle3d rect[400];
 };
 

@@ -47,13 +47,14 @@ Window3d::Window3d()
 	//glShadeModel(GL_FLAT);
 
 	float zPosition = 0;
-	for (int i = 0; i < 25; i++)
+	int mod = 20;
+	for (int i = 0; i < sizeof(rect) / sizeof(Rectangle3d); i++)
 	{
 		rect[i].setSize(10, 10, 10);
-		rect[i].setPosition(10 * (i % 5), 0, 10 * zPosition);
+		rect[i].setPosition(10 * (i % mod), 0, 10 * zPosition);
 		rect[i].setColor(Color4f(rand() % 245+10, rand() % 245 + 10, rand() % 245 + 10, 255));
 
-		if (i % 5 == 4)
+		if (i % mod == mod-1)
 		{
 			zPosition++;
 		}
@@ -94,10 +95,10 @@ void Window3d::render()
 	glLoadIdentity();
 	glMultMatrixf(glm::value_ptr(view));
 
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < sizeof(rect) / sizeof(Rectangle3d); i++)
 	{
 		Vec3f pos = rect[i].getPosition();
-		rect[i].setPosition(pos.x, sin(timeClock.getElapsedTime().asSeconds() + (pos.x * pos.z)) * 3, pos.z);
+		rect[i].setPosition(pos.x, sin(timeClock.getElapsedTime().asSeconds() + (pos.z + pos.x)) * 3, pos.z);
 		rect[i].render();
 	}
 
@@ -170,12 +171,12 @@ void Window3d::updateSFMLEvents()
 				//lastX = xpos;
 				//lastY = ypos;
 
-				float sensitivity = 0.1f;
+				float sensitivity = 0.15f;
 				xoffset *= sensitivity;
 				yoffset *= sensitivity;
 
-				yaw += xoffset;
-				pitch += yoffset;
+				yaw		+=	xoffset;
+				pitch	+=	yoffset;
 
 				if (pitch > 89.0f)
 					pitch = 89.0f;
@@ -205,12 +206,7 @@ void Window3d::updateSFMLEvents()
 
 		if (event.type == sf::Event::KeyPressed)
 		{
-			const float movementSpeed = 5.f;
-
-			switch (event.key.code)
-			{
 			
-			}
 		}
 	}
 }
@@ -218,7 +214,7 @@ void Window3d::updateSFMLEvents()
 
 void Window3d::initWindow()
 {
-	window = new sf::Window(sf::VideoMode(500, 400), "Poly Lab", sf::Style::Default, sf::ContextSettings(24, 8, 0, 3, 3));
+	window = new sf::Window(sf::VideoMode(500, 400), "Poly Lab", sf::Style::Default, sf::ContextSettings(24, 8, 8, 3, 3));
 	window->setVerticalSyncEnabled(true);
 	window->setFramerateLimit(60);
 	window->setActive(true);
