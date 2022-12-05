@@ -34,7 +34,7 @@ Window3d::Window3d()
 	
 	view = glm::mat4(1.f);
 
-	cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	cameraPos = glm::vec3(-10.0f, 0.0f, 0.0f);
 	cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 	cameraDirection = glm::normalize(cameraPos - cameraTarget);
 
@@ -55,6 +55,20 @@ Window3d::Window3d()
 		rect[i].setColor(Color4f(rand() % 245+10, rand() % 245 + 10, rand() % 245 + 10, 255));
 
 		if (i % mod == mod-1)
+		{
+			zPosition++;
+		}
+	}
+
+	zPosition = 0;
+
+	for (int i = 0; i < sizeof(pyramid) / sizeof(Pyramid); i++)
+	{
+		pyramid[i].setSize(10, -10, 10);
+		pyramid[i].setPosition(10 * (i % mod), 100, 10 * zPosition);
+		pyramid[i].setColor(rand() % 245 + 10, rand() % 245 + 10, rand() % 245 + 10, 255);
+
+		if (i % mod == mod - 1)
 		{
 			zPosition++;
 		}
@@ -102,6 +116,13 @@ void Window3d::render()
 		rect[i].render();
 	}
 
+	for (int i = 0; i < sizeof(pyramid) / sizeof(Pyramid); i++)
+	{
+		Vec3f pos = pyramid[i].getPosition();
+		pyramid[i].setPosition(pos.x, sin(timeClock.getElapsedTime().asSeconds() + (pos.z + pos.x)) * 3 + 100, pos.z);
+		pyramid[i].render();
+	}
+
 	window->display();
 }
 
@@ -113,12 +134,21 @@ void Window3d::update()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
 		cameraSpeed *= 2;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
+		cameraSpeed /= 2;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		cameraPos += cameraSpeed * cameraFront;
+	{
+		glm::vec3 temp = cameraSpeed * cameraFront;
+		//temp.y = 0;
+		cameraPos += temp;
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		cameraPos -= cameraSpeed * cameraFront;
-
+	{
+		glm::vec3 temp = cameraSpeed * cameraFront;
+		//temp.y = 0;
+		cameraPos -= temp;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -214,7 +244,7 @@ void Window3d::updateSFMLEvents()
 
 void Window3d::initWindow()
 {
-	window = new sf::Window(sf::VideoMode(500, 400), "Poly Lab", sf::Style::Default, sf::ContextSettings(24, 8, 8, 3, 3));
+	window = new sf::Window(sf::VideoMode(700, 500), "Poly Lab", sf::Style::Default, sf::ContextSettings(24, 8, 0, 3, 3));
 	window->setVerticalSyncEnabled(true);
 	window->setFramerateLimit(60);
 	window->setActive(true);

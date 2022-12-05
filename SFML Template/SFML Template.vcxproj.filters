@@ -90,6 +90,9 @@
     <ClCompile Include="Rectangle3d.cpp">
       <Filter>Source Files\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Pyramid.cpp">
+      <Filter>Source Files\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circle.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pyramid.h">
+      <Filter>Header Files\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

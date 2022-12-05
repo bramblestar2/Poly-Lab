@@ -144,6 +144,7 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Rectangle3d.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="Pyramid.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Rectangle3d.h" />

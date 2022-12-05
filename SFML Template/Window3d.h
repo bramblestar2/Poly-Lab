@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Pyramid.h"
 #include "Rectangle3d.h"
 
 class Window3d
@@ -46,5 +47,6 @@ private:
 	bool firstMouse;
 
 	Rectangle3d rect[400];
+	Pyramid pyramid[400];
 };
 
