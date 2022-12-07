@@ -244,6 +244,7 @@ void Window3d::updateSFMLEvents()
 
 void Window3d::initWindow()
 {
+	
 	window = new sf::Window(sf::VideoMode(700, 500), "Poly Lab", sf::Style::Default, sf::ContextSettings(24, 8, 0, 3, 3));
 	window->setVerticalSyncEnabled(true);
 	window->setFramerateLimit(60);
